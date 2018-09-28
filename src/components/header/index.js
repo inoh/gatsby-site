@@ -1,9 +1,21 @@
 import React from 'react'
+import { StaticQuery, graphql } from 'gatsby'
 
-const Header = ({ url }) => (
+const query = graphql`
+  query {
+    contentfulAsset(title: { eq: "cover" }) {
+      file {
+        url
+      }
+    }
+  }
+`;
+
+const Header = (data) => (
   <div>
-    <img src={url} alt="カバー画像" />
+    <img src={data.contentfulAsset.file.url} alt="カバー画像" />
   </div>
 );
 
-export default Header
+export default () =>
+  <StaticQuery query={query} render={Header} />;
